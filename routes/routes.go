@@ -3,16 +3,16 @@ package routes
 import (
 	"github.com/gorilla/mux"
 	"github.com/swaggo/http-swagger"
-	"example.com/project/handlers"
+
+	"example.com/project/internal/user"
 )
 
-func RegisterRoutes() *mux.Router {
+func RegisterRoutes(userHandler *user.Handler) *mux.Router {
 	router := mux.NewRouter()
 
-	router.HandleFunc("/users", handlers.CreateUser).Methods("POST")
-	router.HandleFunc("/users", handlers.GetUsers).Methods("GET")
-	
-	// Swagger endpoint
+	router.HandleFunc("/users", userHandler.CreateUser).Methods("POST")
+	router.HandleFunc("/users", userHandler.GetUsers).Methods("GET")
+
 	router.PathPrefix("/swagger/").Handler(httpSwagger.WrapHandler)
 
 	return router
